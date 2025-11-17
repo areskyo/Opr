@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         Opr Exporter
 // @version      0.11
-// @description  Export nominations data from Wayfarer to IITC in Wayfarer Planner
-// @namespace    https://gitlab.com/NvlblNm/wayfarer/
-// @downloadURL  https://gitlab.com/NvlblNm/wayfarer/raw/master/wayfarer-exporter.user.js
-// @updateURL    https://gitlab.com/NvlblNm/wayfarer/raw/master/wayfarer-exporter.user.js
-// @homepageURL  https://gitlab.com/NvlblNm/wayfarer/
+// @description  Export nominations data from Opr to IITC in Opr Planner
+// @namespace    https://github.com/areskyo/opr/
+// @downloadURL  https://github.com/areskyo/opr/raw/master/Opr-exporter.user.js
+// @updateURL    https://github.com/areskyo/opr/raw/master/Opr-exporter.user.js
+// @homepageURL  https://github.com/areskyo/opr/
 // @match        https://opr.ingress.com/*
 // ==/UserScript==
 
@@ -56,7 +56,7 @@ function init() {
             const json = JSON.parse(response)
             const nominations = json && json.result && json.result.submissions
             if (!nominations) {
-                logMessage('Failed to parse nominations from Wayfarer')
+                logMessage('Failed to parse nominations from Opr')
                 return
             }
             sentNominations = nominations.filter(
@@ -89,7 +89,7 @@ function init() {
                 }
             })
             if (modifiedCandidates) {
-                localStorage['wayfarerexporter-candidates'] =
+                localStorage['oprexporter-candidates'] =
                     JSON.stringify(currentCandidates)
             } else {
                 logMessage('No modifications detected on the nominations.')
@@ -308,7 +308,7 @@ function init() {
             })
             .catch((error) => {
                 console.log('Catched load name error', error)
-                formData.append('nickname', 'wayfarer')
+                formData.append('nickname', 'opr')
             })
             .finally(() => {
                 pendingUpdates.push(formData)
@@ -335,8 +335,8 @@ function init() {
                     })
                     .catch((error) => {
                         console.log('Catched fetch error', error)
-                        logMessage('Loading name failed. Using wayfarer')
-                        name = 'wayfarer'
+                        logMessage('Loading name failed. Using opr')
+                        name = 'opr'
                         resolve(name)
                     })
             } else {
@@ -397,7 +397,7 @@ function init() {
     }
 
     function getUrl() {
-        return localStorage['wayfarerexporter-url']
+        return localStorage['oprexporter-url']
     }
 
     function addConfigurationButton() {
@@ -409,7 +409,7 @@ function init() {
                     .querySelector('body')
                     .insertAdjacentHTML(
                         'afterBegin',
-                        '<div class="alert alert-danger"><strong><span class="glyphicon glyphicon-remove"></span> Wayfarer Exporter initialization failed, refresh page</strong></div>'
+                        '<div class="alert alert-danger"><strong><span class="glyphicon glyphicon-remove"></span> Opr Exporter initialization failed, refresh page</strong></div>'
                     )
                 return
             }
@@ -422,7 +422,7 @@ function init() {
 
         const link = document.createElement('a')
         link.className =
-            'mat-tooltip-trigger sidebar-link sidebar-wayfarerexporter'
+            'mat-tooltip-trigger sidebar-link sidebar-oprexporter'
         link.title = 'Configure Exporter'
         link.innerHTML =
             '<svg viewBox="0 0 24 24" class="sidebar-link__icon"><path d="M12,1L8,5H11V14H13V5H16M18,23H6C4.89,23 4,22.1 4,21V9A2,2 0 0,1 6,7H9V9H6V21H18V9H15V7H18A2,2 0 0,1 20,9V21A2,2 0 0,1 18,23Z" /></svg><span> Exporter</span>'
@@ -435,7 +435,7 @@ function init() {
 
             const currentUrl = getUrl()
             const url = window.prompt(
-                'Script Url for Wayfarer Planner',
+                'Script Url for Opr Planner',
                 currentUrl
             )
             if (!url) {
@@ -448,14 +448,14 @@ function init() {
 
     function addCss() {
         const css = `
-            .sidebar-wayfarerexporter svg {
+            .sidebar-oprexporter svg {
                 width: 24px;
                 height: 24px;
                 filter: none;
                 fill: currentColor;
             }
 
-            .wayfarer-exporter_log {
+            .opr-exporter_log {
                 background: #fff;
                 box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
                 display: flex;
@@ -466,16 +466,16 @@ function init() {
                 top: 0;
                 z-index: 2;
             }
-            .wayfarer-exporter_log h3 {
+            .opr-exporter_log h3 {
                 margin-right: 1em;
                 margin-top: 0;
             }
-            .wayfarer-exporter_closelog    {
+            .opr-exporter_closelog    {
                 cursor: pointer;
                 position: absolute;
                 right: 0;
             }
-            .wayfarer-exporter_log-wrapper {
+            .opr-exporter_log-wrapper {
                 overflow: auto;
             }
             `
@@ -487,8 +487,8 @@ function init() {
 
     function getAllCandidates() {
         const promesa = new Promise(function (resolve, reject) {
-            const storedData = localStorage['wayfarerexporter-candidates']
-            const lastUpdate = localStorage['wayfarerexporter-lastupdate'] || 0
+            const storedData = localStorage['oprexporter-candidates']
+            const lastUpdate = localStorage['oprexporter-lastupdate'] || 0
             const now = new Date().getTime()
             // cache it for 12 hours
             if (!storedData || now - lastUpdate > 12 * 60 * 60 * 1000) {
@@ -504,7 +504,7 @@ function init() {
     function loadPlannerData(newUrl) {
         let url = newUrl || getUrl()
         if (!url) {
-            url = window.prompt('Script Url for Wayfarer Planner')
+            url = window.prompt('Script Url for Opr Planner')
             if (!url) {
                 return null
             }
@@ -561,10 +561,10 @@ function init() {
                         status: c.status
                     }
                 })
-                localStorage['wayfarerexporter-url'] = url
-                localStorage['wayfarerexporter-lastupdate'] =
+                localStorage['oprexporter-url'] = url
+                localStorage['oprexporter-lastupdate'] =
                     new Date().getTime()
-                localStorage['wayfarerexporter-candidates'] =
+                localStorage['oprexporter-candidates'] =
                     JSON.stringify(candidates)
                 const tracked = Object.keys(candidates).length
                 logMessage(
@@ -577,7 +577,7 @@ function init() {
             .catch(function (e) {
                 console.log(e) // eslint-disable-line no-console
                 alert(
-                    "Wayfarer Planner. Failed to retrieve data from the scriptURL.\r\nVerify that you're using the right URL and that you don't use any extension that blocks access to google."
+                    "Opr Planner. Failed to retrieve data from the scriptURL.\r\nVerify that you're using the right URL and that you don't use any extension that blocks access to google."
                 )
                 return null
             })
@@ -591,25 +591,25 @@ function init() {
     function logMessage(txt) {
         if (!logger) {
             logger = document.createElement('div')
-            logger.className = 'wayfarer-exporter_log'
+            logger.className = 'opr-exporter_log'
             document.body.appendChild(logger)
             const img = document.createElement('img')
             img.src = '/img/sidebar/clear-24px.svg'
-            img.className = 'wayfarer-exporter_closelog'
+            img.className = 'opr-exporter_closelog'
             img.height = 24
             img.width = 24
             img.addEventListener('click', removeLogger)
             logger.appendChild(img)
             const title = document.createElement('h3')
-            title.textContent = 'Wayfarer exporter'
+            title.textContent = 'Opr exporter'
             logger.appendChild(title)
 
             updateLog = document.createElement('div')
-            updateLog.className = 'wayfarer-exporter_log-counter'
+            updateLog.className = 'opr-exporter_log-counter'
             logger.appendChild(updateLog)
 
             msgLog = document.createElement('div')
-            msgLog.className = 'wayfarer-exporter_log-wrapper'
+            msgLog.className = 'opr-exporter_log-wrapper'
             logger.appendChild(msgLog)
         }
         const div = document.createElement('div')

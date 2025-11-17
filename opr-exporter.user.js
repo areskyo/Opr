@@ -3,8 +3,8 @@
 // @version      0.11
 // @description  Export nominations data from Opr to IITC in Opr Planner
 // @namespace    https://github.com/areskyo/opr/
-// @downloadURL  https://github.com/areskyo/opr/raw/master/Opr-exporter.user.js
-// @updateURL    https://github.com/areskyo/opr/raw/master/Opr-exporter.user.js
+// @downloadURL  https://github.com/areskyo/Opr/raw/refs/heads/main/opr-exporter.user.js
+// @updateURL    https://github.com/areskyo/Opr/raw/refs/heads/main/opr-exporter.user.js
 // @homepageURL  https://github.com/areskyo/opr/
 // @match        https://opr.ingress.com/*
 // ==/UserScript==

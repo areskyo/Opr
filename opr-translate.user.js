@@ -1,11 +1,12 @@
 // ==UserScript==
-// @name         Wayfarer Translate
+// @name         Opr Translate
 // @version      0.3.3
-// @description  Add translate option to Wayfarer
-// @namespace    https://gitlab.com/NvlblNm/wayfarer/
-// @downloadURL  https://gitlab.com/NvlblNm/wayfarer/raw/master/wayfarer-translate.user.js
-// @homepageURL  https://gitlab.com/NvlblNm/wayfarer/
-// @match        https://wayfarer.nianticlabs.com/*
+// @description  Add translate option to Opr
+// @namespace    https://github.com/areskyo/Opr/
+// @downloadURL  https://raw.githubusercontent.com/areskyo/Opr/refs/heads/main/opr-translate.user.js
+// @updateURL    https://raw.githubusercontent.com/areskyo/Opr/refs/heads/main/opr-translate.user.js
+// @homepageURL  https://github.com/areskyo/Opr/
+// @match        https://opr.ingress.com/*
 // ==/UserScript==
 
 /* eslint-env es6 */
@@ -50,7 +51,7 @@ function init() {
             const json = JSON.parse(response)
             if (!json) {
                 console.log(response)
-                alert('Failed to parse response from Wayfarer')
+                alert('Failed to parse response from Opr')
                 return
             }
             // ignore if it's related to captchas
@@ -65,7 +66,7 @@ function init() {
             candidate = json.result
             if (!candidate) {
                 console.log(json)
-                alert("Wayfarer's response didn't include a candidate.")
+                alert("Opr's response didn't include a candidate.")
                 return
             }
             addTranslateButton()
@@ -91,7 +92,7 @@ function init() {
     function createButton(ref) {
         if (!translateButton) {
             const div = document.createElement('div')
-            div.className = 'wayfarertranslate'
+            div.className = 'oprtranslate'
             const link = document.createElement('a')
             link.className = ''
             link.title = 'Translate nomination'
@@ -141,7 +142,7 @@ function init() {
                     .querySelector('body')
                     .insertAdjacentHTML(
                         'afterBegin',
-                        '<div class="alert alert-danger"><strong><span class="glyphicon glyphicon-remove"></span> Wayfarer Translate initialization failed, refresh page</strong></div>'
+                        '<div class="alert alert-danger"><strong><span class="glyphicon glyphicon-remove"></span> Opr Translate initialization failed, refresh page</strong></div>'
                     )
                 return
             }
@@ -178,18 +179,18 @@ function init() {
             const link = translateButton.querySelector('a')
             link.dataset.text = text
             link.href = getTranslatorLink() + encodeURIComponent(text)
-            translateButton.classList.add('wayfarertranslate__visible')
+            translateButton.classList.add('oprtranslate__visible')
         }
     }
 
     function hideButton() {
-        translateButton.classList.remove('wayfarertranslate__visible')
+        translateButton.classList.remove('oprtranslate__visible')
     }
 
     function addCss() {
         const css = `
 
-            .wayfarertranslate {
+            .oprtranslate {
                 color: #333;
                 margin-left: 2em;
                 padding-top: 0.3em;
@@ -197,11 +198,11 @@ function init() {
                 display: none;
             }
 
-            .wayfarertranslate__visible {
+            .oprtranslate__visible {
                 display: inline;
             }
 
-            .wayfarertranslate svg {
+            .oprtranslate svg {
                 width: 24px;
                 height: 24px;
                 filter: none;
@@ -209,12 +210,12 @@ function init() {
                 margin: 0 auto;
             }
 
-            .dark .wayfarertranslate {
+            .dark .oprtranslate {
                 color: #ddd;
             }
 
-            .dark .wayfarertranslate select,
-            .dark .wayfarertranslate option {
+            .dark .oprtranslate select,
+            .dark .oprtranslate option {
                 background: #000;
             }
             `

@@ -6,7 +6,7 @@
 // @downloadURL  https://gitlab.com/NvlblNm/wayfarer/raw/master/wayfarer-exporter.user.js
 // @updateURL    https://gitlab.com/NvlblNm/wayfarer/raw/master/wayfarer-exporter.user.js
 // @homepageURL  https://gitlab.com/NvlblNm/wayfarer/
-// @match        https://wayfarer.nianticlabs.com/*
+// @match        https://opr.ingress.com/*
 // ==/UserScript==
 
 /* eslint-env es6 */
@@ -324,7 +324,7 @@ function init() {
             if (!nameLoadingTriggered) {
                 nameLoadingTriggered = true
                 const url =
-                    'https://wayfarer.nianticlabs.com/api/v1/vault/properties'
+                    'https://opr.ingress.com/api/v1/vault/properties'
                 fetch(url)
                     .then((response) => {
                         response.json().then((json) => {
